@@ -1142,6 +1142,8 @@ const observer=new IntersectionObserver((entries)=>{
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
 const FORM_ENDPOINT='https://formsubmit.co/ajax/israeltrblsi123@gmail.com';
+const SUPABASE_URL='https://hxvjpggcmhdpehnhytge.supabase.co';
+const SUPABASE_KEY='sb_publishable_casW3EV1elmCrglSI8hC0A_T2SxniQ7';
 document.querySelectorAll('form.lead-form-js').forEach(form=>{
   form.addEventListener('submit',async(e)=>{
     e.preventDefault();
@@ -1176,6 +1178,7 @@ document.querySelectorAll('form.lead-form-js').forEach(form=>{
     btn.disabled=true;
     btnLabel.textContent=lang==='he'?'שולח…':'Sending…';
     try{
+      fetch(SUPABASE_URL+'/rest/v1/leads',{method:'POST',headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({name:get('name').value.trim(),organization:get('organization').value.trim(),phone:get('phone').value.trim(),email:emailVal,location:get('location').value.trim(),participants:parseInt(get('participants').value,10)||null,source:'landing'})}).catch(e=>console.warn('sb',e));
       const res=await fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
       if(!res.ok)throw new Error('net '+res.status);
       form.querySelector('.success').classList.add('visible');
